@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Заявки на заказ
 
-## Getting Started
+Форма на главной странице принимает имя и белорусский номер телефона. Заявки сохраняются в таблицу `orders` в Neon Postgres через серверный обработчик `POST /api/orders`.
 
-First, run the development server:
+## Подключение Neon Postgres
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Создайте базу Neon Postgres и подключите её к проекту Vercel либо скопируйте строку подключения в панели Neon.
+2. В SQL Editor Neon выполните скрипт из [`database/schema.sql`](./database/schema.sql).
+3. Добавьте переменную окружения `DATABASE_URL` со строкой подключения:
+   - локально — в `.env.local` в корне проекта;
+   - на Vercel — в настройках проекта в **Settings → Environment Variables** для нужных окружений.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   Пример `.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```env
+   DATABASE_URL=postgresql://user:password@host/database?sslmode=require
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   Не добавляйте `.env.local` в Git и не используйте префикс `NEXT_PUBLIC_` для этой переменной: она нужна только серверу.
+4. Запустите приложение:
 
-## Learn More
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+После изменения переменных окружения на Vercel создайте новый deployment. Обработчик проверяет имя и номер на сервере, приводит номер к формату `+375XXXXXXXXX` и сохраняет его параметризованным запросом.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Номер можно указать с кодом `+375`, `375` или в национальном формате `80`; также принимается номер из девяти цифр без кода страны.

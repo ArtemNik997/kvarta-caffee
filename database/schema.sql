@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS leads (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  phone VARCHAR(13) NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS orders_created_at_idx ON orders (created_at DESC);
