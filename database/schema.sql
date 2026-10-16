@@ -5,4 +5,6 @@ CREATE TABLE IF NOT EXISTS leads (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS orders_created_at_idx ON orders (created_at DESC);
+CREATE INDEX IF NOT EXISTS leads_created_at_idx ON leads (created_at DESC);
+
+ALTER TABLE leads ENABLE ROW LEVEL SECURITY;

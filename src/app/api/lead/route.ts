@@ -1,4 +1,4 @@
-import { neon } from "@neondatabase/serverless";
+import { createClient } from "@supabase/supabase-js";
 
 export const runtime = "nodejs";
 
@@ -59,10 +59,11 @@ export async function POST(request: Request) {
     );
   }
 
-  const databaseUrl = process.env.DATABASE_URL;
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  if (!databaseUrl) {
-    console.error("DATABASE_URL is not configured.");
+  if (!supabaseUrl || !serviceRoleKey) {
+    console.error("SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY is not configured.");
     return Response.json(
       { error: "Сервис временно недоступен. Попробуйте позже." },
       { status: 503 },
@@ -70,13 +71,22 @@ export async function POST(request: Request) {
   }
 
   try {
-    const sql = neon(databaseUrl);
-    await sql`
-      INSERT INTO leads (customer_name, phone)
-      VALUES (${customerName}, ${normalizedPhone})
-    `;
+    const supabase = createClient(supabaseUrl, serviceRoleKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+    const { error } = await supabase.from("leads").insert({
+      customer_name: customerName,
+      phone: normalizedPhone,
+    });
+
+    if (error) {
+      throw error;
+    }
   } catch (error) {
-    console.error("Failed to save order request:", error);
+    console.error("Failed to save lead in Supabase:", error);
     return Response.json(
       { error: "Не удалось сохранить заявку. Попробуйте ещё раз." },
       { status: 500 },
