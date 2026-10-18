@@ -1,5 +1,6 @@
 import AttributionCapture from '@/components/AttributionCapture';
 import FreshnessBadge from '@/components/FreshnessBadge';
+import LeadForm from '@/components/LeadForm';
 // import LeadForm from '@/components/LeadForm';
 import ProductCard from '@/components/ProductCard';
 import Reveal from '@/components/Reveal';
@@ -156,6 +157,17 @@ export default function Home() {
             конкретной четверговой обжарки.
           </p>
         </Reveal>
+      </section>
+
+      {/* ФОРМА */}
+      <section id="order" className="mx-auto max-w-xl scroll-mt-6 px-5 py-14">
+        <h2 className="font-display text-3xl font-bold">Оставить заявку</h2>
+        <p className="mt-2">
+          Менеджер перезвонит и всё оформит. Оплата сейчас не нужна.
+        </p>
+        <div className="mt-6">
+          <LeadForm phone={PHONE} tg={TG} />
+        </div>
       </section>
 
       <footer className="border-t border-roast/30 px-5 py-8 text-sm">
