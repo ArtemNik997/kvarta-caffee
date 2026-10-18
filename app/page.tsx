@@ -1,3 +1,4 @@
+import AttributionCapture from '@/components/AttributionCapture';
 import FreshnessBadge from '@/components/FreshnessBadge';
 // import LeadForm from '@/components/LeadForm';
 import ProductCard from '@/components/ProductCard';
@@ -28,6 +29,7 @@ const jsonLd = {
 export default function Home() {
   return (
     <main>
+      <AttributionCapture />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

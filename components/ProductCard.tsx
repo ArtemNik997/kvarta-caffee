@@ -11,7 +11,7 @@ export default function ProductCard({ p }: { p: Product }) {
           width={640}
           height={480}
           sizes="(min-width:768px) 25vw, 90vw"
-          className="aspect-[4/3] w-full rounded object-cover"
+          className="aspect-4/3 w-full rounded object-cover"
         />
       )}
       <div className="flex items-start justify-between gap-3">
@@ -24,7 +24,7 @@ export default function ProductCard({ p }: { p: Product }) {
       </div>
       <p>{p.notes}</p>
       <p className="text-sm text-roast">{p.meta}</p>
-      <span className="mt-auto self-start rotate-[-3deg] border border-ember px-2 py-0.5 text-xs uppercase tracking-wide text-ember">
+      <span className="mt-auto self-start -rotate-3 border border-ember px-2 py-0.5 text-xs uppercase tracking-wide text-ember">
         Обжарка: чт
       </span>
     </article>
