@@ -14,7 +14,8 @@ const alegreya = Alegreya({
   weight: ['500', '700'],
 });
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kvarta.vercel.app';
+const SITE =
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://kvarta-caffee.vercel.app';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
