@@ -17,7 +17,7 @@ export default function LeadForm({
   const [errors, setErrors] = useState<Errors>({});
   const lock = useRef(false); // защита от двойного клика (state обновляется асинхронно)
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (lock.current) return;
 
